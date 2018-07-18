@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'maven'
+}
+
+group 'com.mhc.fabric-client-java'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+task wrapper(type: Wrapper){
+    gradleVersion = "4.4"
+}
+
+repositories {
+    mavenCentral()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.5
+//            }
+//        }
+//
+//        rule {
+//            enabled = false
+//            element = 'CLASS'
+//            includes = ['org.gradle.*']
+//
+//            limit {
+//                counter = 'LINE'
+//                value = 'TOTALCOUNT'
+//                maximum = 0.3
+//            }
+//        }
+//    }
+//}
+dependencies {
+    compile('org.springframework.boot:spring-boot-autoconfigure-processor:2.0.3.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter:2.0.3.RELEASE')
+    compile('org.hyperledger.fabric-sdk-java:fabric-sdk-java:1.1.0')
+    compile('org.apache.commons:commons-configuration2:2.1.1')
+    compile('commons-beanutils:commons-beanutils:1.9.3')
+    compile('org.apache.httpcomponents:httpmime:4.5.5')
+//    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime
+//    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.5'
+
+//    compile('com.google.code.gson:gson:2.3.1')
+//    compile('commons-io:commons-io:2.4')
+    // https://mvnrepository.com/artifact/org.springframework/spring-core
+    compile group: 'org.springframework', name: 'spring-core', version: '5.0.7.RELEASE'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar{
+    baseName='fabric-client'
+}

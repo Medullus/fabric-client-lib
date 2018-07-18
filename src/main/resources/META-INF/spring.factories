@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.mhc.fabric.client.config.FabricAutoConfigure
