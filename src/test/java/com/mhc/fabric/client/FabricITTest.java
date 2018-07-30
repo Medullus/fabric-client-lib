@@ -115,7 +115,7 @@ public class FabricITTest {
         out("payload is "+payload);
 
         //blockwalker
-        ChannelUtils channelUtils = new ChannelUtils();
+        ChannelUtils channelUtils = ChannelUtils.getInstance();
         Channel channelBlock = client.getChannel("foo");
         channelUtils.blockWalker(client, channelBlock);
     }
