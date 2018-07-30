@@ -2,7 +2,6 @@ package com.mhc.fabric.client;
 
 import com.mhc.fabric.client.models.ChaincodeInfo;
 import com.mhc.fabric.client.models.SampleUser;
-import com.mhc.fabric.client.models.UserStoreInfo;
 import org.hyperledger.fabric.sdk.NetworkConfig;
 import org.hyperledger.fabric.sdk.exception.*;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;

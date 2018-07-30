@@ -4,7 +4,6 @@ import com.mhc.fabric.client.config.FabricConfig;
 import com.mhc.fabric.client.models.ChaincodeInfo;
 import com.mhc.fabric.client.models.SampleStore;
 import com.mhc.fabric.client.models.SampleUser;
-import com.mhc.fabric.client.models.UserStoreInfo;
 import com.mhc.fabric.client.utils.chaincode.CCStub;
 import com.mhc.fabric.client.utils.user.UserUtils;
 import org.apache.log4j.Logger;
@@ -22,9 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.concurrent.ExecutionException;
 
-import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_NETWORKCONFIG;
-import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_ORGAFFILIATION;
-import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_STORETABLENAME;
+import static com.mhc.fabric.client.config.FabricConfigParams.*;
 
 public class FabricClientImpl implements FabricClient {
 

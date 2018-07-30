@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.bouncycastle.asn1.ASN1Integer;
 import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequenceGenerator;
-import org.hyperledger.fabric.protos.ledger.rwset.kvrwset.KvRwset;
 import org.hyperledger.fabric.sdk.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.NetworkConfigurationException;
@@ -15,19 +14,46 @@ import org.hyperledger.fabric.sdk.security.CryptoSuite;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static java.lang.String.format;
 
 public class ChannelUtils {
-    private static Logger logger = Logger.getLogger(ChannelUtils.class);
+    private Logger logger = Logger.getLogger(ChannelUtils.class);
     //use a cache service to cache channels, initialization of channel has a long latency TODO
 
-    public ChannelUtils(){
+    private static ChannelUtils instance;
 
+    private Map<String, Channel> channels;
+
+    private ChannelUtils(){
+
+        this.channels = new HashMap<>();
     }
 
-    public static Channel constructChannel(HFClient hfClient, NetworkConfig networkConfig, String channelName) throws InvalidArgumentException, NetworkConfigurationException, TransactionException {
+    public static ChannelUtils getInstance(){
+        if (instance != null){
+            return instance;
+        }else{
+            instance = new ChannelUtils();
+            return instance;
+        }
+    }
+
+    //TODO check for error here
+    public Channel getChannel(String chanName){
+        if(channels.containsKey(chanName)){
+            return channels.get(chanName);
+        }
+        return channels.get(chanName);
+    }
+
+    public Channel constructChannel(HFClient hfClient, NetworkConfig networkConfig, String channelName) throws InvalidArgumentException, NetworkConfigurationException, TransactionException {
+        if(channels.containsKey(channelName)){
+            return channels.get(channelName);
+        }
+
         Channel channel;
         logger.debug("constructing channel");
 
@@ -50,7 +76,8 @@ public class ChannelUtils {
         if(channel.isInitialized()){
             return channel;
         }
-        return channel.initialize();
+        channels.put(channelName, channel.initialize());
+        return channels.get(channelName);
     }
 
     //TODO build a blockinfo pojo and add to list

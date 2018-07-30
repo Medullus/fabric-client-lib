@@ -20,6 +20,7 @@ import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_MAXENRO
  * HFCA_TYPE_CLIENT indicates that an identity is acting as a client
  */
 //public static final String HFCA_TYPE_CLIENT = "client";
+
 /**
  * HFCA_TYPE_USER indicates that an identity is acting as a user
  */

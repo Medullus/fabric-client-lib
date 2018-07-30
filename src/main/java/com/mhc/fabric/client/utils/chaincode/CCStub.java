@@ -5,26 +5,29 @@ import com.mhc.fabric.client.models.ChaincodeInfo;
 import com.mhc.fabric.client.utils.channel.ChannelUtils;
 import org.apache.log4j.Logger;
 import org.hyperledger.fabric.sdk.*;
-import org.hyperledger.fabric.sdk.exception.*;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.NetworkConfigurationException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
+import org.hyperledger.fabric.sdk.exception.TransactionException;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
 
 import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_PROPOSALWAITTIME;
-import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_TRANSACTIONWAITTIME;
 
 public class CCStub {
     static Logger logger = Logger.getLogger(CCStub.class);
 
     private FabricConfig fabricConfig;
     private NetworkConfig networkConfig;
+    private ChannelUtils channelUtils;
 
     public CCStub(FabricConfig fabricConfig, NetworkConfig networkConfig){
         this.fabricConfig = fabricConfig;
         this.networkConfig = networkConfig;
+        this.channelUtils = ChannelUtils.getInstance();
     }
 
     /**
@@ -202,7 +205,7 @@ public class CCStub {
     private Channel getChannelFromConfig(HFClient hfClient, String channelName) throws NetworkConfigurationException, InvalidArgumentException, TransactionException {
         logger.debug("getChannelFromConfig");
         try {
-            return ChannelUtils.constructChannel(hfClient, networkConfig, channelName);
+            return channelUtils.constructChannel(hfClient, networkConfig, channelName);
         } catch (TransactionException e) {
             e.printStackTrace();
             logger.error(e);
